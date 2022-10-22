@@ -3,7 +3,7 @@ function encodeText(text) {
           const encodedText = text.replace(/[\u00A0-\u9999<>\&]/g, (i) => (
             '&#'+i.charCodeAt(0)+';'
           ));
-          return encodedText.trim();
+          return encodedText.trim().replace(/\n|\r|\t/g, ""); // remove newlines, carriage returns, and tabs because they mess up the template
         }
     // If not string, it doesn't need to be encoded, return it:
     return text;
@@ -30,10 +30,5 @@ module.exports = {
           return `NOTICE: Invalid form type was submitted. Received: ${encodedFormType}`;
       }
       return formType;
-  },
-
-  cleanJson: (str) => { // double escape sequences like \n that break JSON.parse
-    const newStr = str.replace(/\n|\r|\t/g, "");
-    return newStr;
   }
 };
