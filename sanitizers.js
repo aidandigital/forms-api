@@ -1,12 +1,17 @@
 function encodeText(text) {
-    if (typeof text === "string") { // if string, encode to prevent XSS
-          const encodedText = text.replace(/[\u00A0-\u9999<>\&]/g, (i) => (
-            '&#'+i.charCodeAt(0)+';'
-          ));
-          return encodedText.trim().replace(/\n|\r|\t/g, ""); // remove newlines, carriage returns, and tabs because they mess up the template
-        }
-    // If not string, it doesn't need to be encoded, return it:
-    return text;
+  if (typeof text === "string") { // if string, encode to prevent XSS
+    const textRgx = /([^A-z0-9~'!@#$%&*()_+=:;,.?/-\s]|[\n\t\r\\^[\]])/g;
+    let encodedText = text.replace(textRgx, '');
+
+    // encoding to prevent XSS:
+    encodedText.replace(/[\u00A0-\u9999<>\&]/g, (i) => (
+      '&#'+i.charCodeAt(0)+';'
+    ));
+
+    return encodedText.trim();
+  }
+  // If not string, it doesn't need to be encoded, return it:
+  return text;
 }
 
 module.exports = {
