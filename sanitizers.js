@@ -33,6 +33,7 @@ module.exports = {
   },
 
   cleanJson: (str) => { // double escape sequences like \n that break JSON.parse
-    return str.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t");
+    const newStr = str.replace(/\n|\r|\t/g, "");
+    return newStr;
   }
 };
