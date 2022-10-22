@@ -1,9 +1,10 @@
 const sendEmail = require("./sendEmail");
 const response = require("./response");
 const { checkStringFields, checkEmail } = require("./validators");
+const { cleanJson } = require("./sanitizers");
 
 exports.handler = async function (event) {
-  const data = JSON.parse(event.body);
+  const data = JSON.parse(cleanJson(event.body));
   
   // Create an object of server-side metadata:
   const utcTime = new Date();
