@@ -1,9 +1,11 @@
 function encodeText(text) {
   if (typeof text === "string") { // if string, encode to prevent XSS
+    // some sanitization:
     const textRgx = /([^A-z0-9~'!@#$%&*()_+=:;,.?/-\s]|[\n\t\r\\^[\]])/g;
+    // ^ Removes things that could break the template, such as new line characters, etc.
     let encodedText = text.replace(textRgx, '');
 
-    // encoding to prevent XSS:
+    // actual encoding:
     encodedText.replace(/[\u00A0-\u9999<>\&]/g, (i) => (
       '&#'+i.charCodeAt(0)+';'
     ));
